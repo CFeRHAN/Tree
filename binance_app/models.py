@@ -42,6 +42,9 @@ class Currency(models.Model):
     symbol = models.CharField(max_length=3)
     amount = models.IntegerField(db_index=True, default=0)
 
+    def __str__(self):
+        return f'{self.symbol} binance'
+
 
 class Order(models.Model):
     symbol = models.CharField(max_length=15, blank=False)
