@@ -10,4 +10,4 @@ print(api, secret)
 clients = []
 for i, j in api, secret:
     client = Client(api_key=api, secret_key=secret)
-    client.append(Client)
+    client.append(Clients)
