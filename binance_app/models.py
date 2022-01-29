@@ -38,7 +38,7 @@ class BinanceProfile(models.Model):
 
 class Currency(models.Model):
     """ Model for crypto currency with name and symbol. """
-    name = models.CharField(max_length=20)
+    name = models.ForeignKey(BinanceProfile, on_delete=models.CASCADE)
     symbol = models.CharField(max_length=3)
     amount = models.IntegerField(db_index=True, default=0)
 

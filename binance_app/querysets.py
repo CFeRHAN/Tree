@@ -1,12 +1,13 @@
 from binance.client import Client
-from .models import BinanceProfile
+from .models import BinanceProfile as BP
 
 
-def CreateClient():
-    queryset = BinanceProfile.objects.all()
-    for i in queryset:
-        api = queryset['api']
-        secret = queryset['secret']
-        client = Client(api, secret)
-        client.futures_create_order()
-    return client
+"""create client"""
+api = BP.objects.get("api")
+secret = BP.objects.get("secret")
+
+print(api, secret)
+clients = []
+for i, j in api, secret:
+    client = Client(api_key=api, secret_key=secret)
+    client.append(Client)
