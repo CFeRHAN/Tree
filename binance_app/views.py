@@ -1,24 +1,25 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import BinanceProfile
+from django.contrib import messages
 from .forms import BinanceProfileForm
 from users.forms import UserUpdateForm
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
 @login_required
 def binance_profile(request):
-    """creates a binance profile"""
+    """shows a binance profile"""
     if request.method == 'GET':
-        profile_temp = BinanceProfile.objects.all().filter(user=request.user)
-        profile = BinanceProfile.objects.filter(api__in=profile_temp)
-        profiles = []
-        for i in profile:
-            profiles.append(i)
-
-        
+        profile_temp = BinanceProfile.objects.filter(user=request.user).first()
+        profile_api = profile_temp.api
+        profile_secret = profile_temp.secret
+        profile_details = {
+        'profile_api': profile_api,
+        'profile_secret': profile_secret,
+        }
+        """a test on profile"""
+        print("this is profile: ", profile_details)
     else:
-        return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
-    
-    return render(request, 'binance_profile.html', {'profiles':profiles})
+        pass
+    return render(request, 'binance_profile.html', profile_details)
