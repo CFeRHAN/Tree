@@ -4,7 +4,9 @@ from .models import BinanceProfile
 from django.shortcuts import render, redirect
 
 
-def getDetail(request):
+
+
+def GetDetail(request):
     """gives profile API/Secret"""
     profile_temp = BinanceProfile.objects.filter(user=request.user).first()
     profile_api = profile_temp.api
@@ -16,21 +18,14 @@ def getDetail(request):
     print(profile_details)
     return profile_details
 
-def createClient(request, profile_details):
-    client = Client(api_key=profile_details['profile_api'], secret=profile_details['profile_secret'])
-    print(client)
-    return client
-
-def CreateMarketOrder(request, client):
-    if request.method == "POST":
-        order = client.futures.create_order(
-            symbol=MarketOrder.symbol,
-            side=MarketOrder.side,
-            type=MarketOrder.type,
-            timeInForce=LimitOrder.timeInForce,
-            quantity=LimitOrder.quantity,
-            price=LimitOrder.price
-        )
-        order()
-    else:
-        pass
+def CreateClient(request, profile_details):
+    """function that instansiates the Client from Binance with Api and Secret"""
+    clients = []
+    for profile_api, profile_secret in profile_details:
+        client = Client(api_key=profile_details['profile_api'], secret=profile_details['profile_secret'])
+        if client not in clients:
+            clients.append(client)
+        else:
+            pass 
+    print(clients)
+    return clients
