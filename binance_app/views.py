@@ -1,25 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import BinanceProfile
-from django.contrib import messages
-from .forms import BinanceProfileForm
-from users.forms import UserUpdateForm
-from django.http import HttpResponse
+from .api_requests import CreateMarketOrder
+from rest_framework.views import APIViews
+from rest_framework.response import Response
 
 
-@login_required
-def binance_profile(request):
-    """shows a binance profile"""
-    if request.method == 'GET':
-        profile_temp = BinanceProfile.objects.filter(user=request.user).first()
-        profile_api = profile_temp.api
-        profile_secret = profile_temp.secret
-        profile_details = {
-        'profile_api': profile_api,
-        'profile_secret': profile_secret,
-        }
-        """a test on profile"""
-        print("this is profile: ", profile_details)
-    else:
-        pass
-    return render(request, 'binance_profile.html', profile_details)
+class MarketOrder(APIViews):
+    def get(self, request):
+        symbol = request.GET.get('symbol')
+        side = request.GET.get('side')
+        order_type = request.GET.get('type')
+        timeINForce = request.GET.get('timeINForce')
+        quantity = request.GET.get('quantity')
+        temp = CreateMarketOrder(symbol, side, order_type, timeINForce, quantity)
+        return Response(temp, status=200)

@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import follow, followers_count, register, profile, home
 
+
 urlpatterns = [
     path('home/', home, name='home'),
     path('follow/', follow, name='follow'),

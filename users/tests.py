@@ -1,3 +1,3 @@
 from django.test import TestCase
+from binance.client import Client
 
-# Create your tests here.
