@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>this is binance profile</p>
+    <p>{{profile_details}}</p>
+    <p>profile api: {{profile_api}}</p>
+    {% for profile in profile_details %}
+    <p>this should be profile: {{profile}}</p>
+    {% endfor %}
+</body>
+</html>
